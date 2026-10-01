@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskBloom 🌸</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#fff7fb,#eefaf5);color:#39445c;transition:.4s}
+body.night{background:linear-gradient(135deg,#17233d,#243653);color:#eef4ff}
+.sidebar{position:fixed;left:0;top:0;width:230px;height:100vh;padding:28px 18px;background:#ffffffcc;backdrop-filter:blur(12px);box-shadow:4px 0 20px #7c8ba522;z-index:10}
+body.night .sidebar{background:#17243dcc}
+.logo{font-size:27px;font-weight:800;color:#7c83d6;margin-bottom:28px;text-align:center}
+.nav button{width:100%;border:0;background:transparent;padding:13px 14px;margin:4px 0;border-radius:14px;text-align:left;color:inherit;font-size:15px;cursor:pointer}
+.nav button:hover,.nav button.active{background:#e8e6ff;color:#5f62ad}
+body.night .nav button:hover,body.night .nav button.active{background:#34466d;color:#fff}
+.main{margin-left:230px;padding:38px;min-height:100vh;position:relative;overflow:hidden}
+.cloud{position:fixed;font-size:55px;opacity:.45;animation:float 35s linear infinite;z-index:0;pointer-events:none}
+.c1{top:8%;left:25%}.c2{top:28%;left:75%;animation-duration:45s}.c3{top:65%;left:40%;animation-duration:50s}
+@keyframes float{0%{transform:translateX(-150px)}100%{transform:translateX(110vw)}}
+.stars{display:none;position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:55px 55px;opacity:.25}
+body.night .stars{display:block}
+.page{display:none;max-width:1100px;margin:auto;position:relative;z-index:2}
+.page.active{display:block}
+h1{font-size:38px;margin:5px 0 8px}
+h2{margin-top:0}
+.subtitle{color:#78839a;margin-bottom:28px}
+.card{background:#ffffffd9;border-radius:24px;padding:25px;margin:18px 0;box-shadow:0 10px 30px #65708b18;backdrop-filter:blur(10px)}
+body.night .card{background:#263755dd;color:#eef4ff}
+input,select,textarea{width:100%;padding:13px 15px;border:1px solid #dce1ee;border-radius:13px;margin:7px 0;background:#fff;color:#39445c;font-size:14px}
+body.night input,body.night select,body.night textarea{background:#1c2b48;color:#fff;border-color:#435474}
+textarea{min-height:130px;resize:vertical}
+button.primary,.primary{border:0;background:#8c91df;color:white;padding:12px 18px;border-radius:13px;cursor:pointer;font-weight:700}
+button.secondary{border:0;background:#e8e8fb;color:#5d62a9;padding:10px 15px;border-radius:12px;cursor:pointer}
+button.danger{border:0;background:#ffdede;color:#a14b4b;padding:9px 13px;border-radius:11px;cursor:pointer}
+.task{display:flex;align-items:center;gap:12px;padding:14px;border-radius:15px;background:#f8f9fd;margin:9px 0}
+body.night .task{background:#1d2c49}
+.task.done{opacity:.6;text-decoration:line-through}
+.task span{flex:1}
+.progress{height:13px;background:#e8eaf2;border-radius:20px;overflow:hidden;margin:15px 0}
+.progress div{height:100%;background:#9b9fe5;width:0;transition:.4s}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.stat{padding:20px;border-radius:18px;background:#f6f5ff;text-align:center}
+body.night .stat{background:#1e2e4d}
+.stat b{display:block;font-size:28px;color:#777bd0;margin-bottom:5px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.goal,.plan-day,.note{padding:18px;border-radius:17px;background:#f8f9fd;margin:12px 0}
+body.night .goal,body.night .plan-day,body.night .note{background:#1d2c49}
+.small{font-size:13px;color:#7b8599}
+.timer{font-size:32px;font-weight:800;text-align:center;margin:10px}
+.session{padding:12px;margin:8px 0;background:#fff;border-radius:12px}
+body.night .session{background:#263755}
+@media(max-width:800px){
+.sidebar{width:75px;padding:20px 8px}.logo{font-size:20px}.nav button{font-size:0;text-align:center}.nav button::first-letter{font-size:20px}
+.main{margin-left:75px;padding:20px}.grid,.stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="cloud c1">☁️</div><div class="cloud c2">☁️</div><div class="cloud c3">☁️</div>
+
+<aside class="sidebar">
+  <div class="logo">🌸 TaskBloom</div>
+  <div class="nav">
+    <button onclick="page('home')" class="active">🏠 Home</button>
+    <button onclick="page('dashboard')">📊 Dashboard</button>
+    <button onclick="page('results')">📅 Day Results</button>
+    <button onclick="page('goals')">🌱 Hopes & Dreams</button>
+    <button onclick="page('study')">📚 Study Plan</button>
+    <button onclick="page('notes')">📝 Custom Notes</button>
+    <button onclick="page('history')">🕰️ History</button>
+    <button onclick="page('settings')">⚙️ Settings</button>
+  </div>
+</aside>
+
+<main class="main">
+<section id="home" class="page active">
+  <h1 id="greeting">Good evening 🌷</h1>
+  <div class="subtitle" id="date"></div>
+
+  <div class="card">
+    <h2>Today's Tasks</h2>
+    <div style="display:flex;gap:10px">
+      <input id="taskInput" placeholder="Add a task...">
+      <button class="primary" onclick="addTask()">Add</button>
+    </div>
+    <div id="tasks"></div>
+    <div class="progress"><div id="bar"></div></div>
+    <b id="counter">0 / 0 completed</b>
+  </div>
+
+  <div class="card">
+    <h2>Focus Timer</h2>
+    <div class="timer" id="timer">00:00:00</div>
+    <div style="text-align:center">
+      <button class="primary" onclick="startTimer()">Start</button>
+      <button class="secondary" onclick="stopTimer()">Stop</button>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center">
+    <h2>🌼 Little Reminder</h2>
+    <p id="motivation">Small steps still count. Keep going.</p>
+    <button class="primary" onclick="finishDay()">Finish Day ✨</button>
+    <button class="secondary" onclick="newDay()">Start New Day</button>
+  </div>
+</section>
+
+<section id="dashboard" class="page">
+  <h1>Dashboard 📊</h1><div class="subtitle">A quick look at your progress.</div>
+  <div class="stats">
+    <div class="stat"><b id="daysTracked">0</b>Days tracked</div>
+    <div class="stat"><b id="tasksDone">0</b>Tasks completed</div>
+    <div class="stat"><b id="streak">0</b>Day streak</div>
+  </div>
+</section>
+
+<section id="results" class="page">
+  <h1>Day Results 📅</h1><div class="subtitle">See how your latest day went.</div>
+  <div class="card" id="yesterday"></div>
+</section>
+
+<section id="goals" class="page">
+  <h1>Hopes & Dreams 🌱</h1><div class="subtitle">Keep the things you care about in sight.</div>
+  <div class="card">
+    <div class="grid">
+      <input id="goalInput" placeholder="Your hope or dream">
+      <input id="goalDate" type="date">
+    </div>
+    <button class="primary" onclick="addGoal()">Add Goal</button>
+  </div>
+  <div id="goalsList"></div>
+</section>
+
+<section id="study" class="page">
+  <h1>Custom Study Plan 📚</h1><div class="subtitle">Build a study schedule around your subjects and target.</div>
+  <div class="card">
+    <div class="grid">
+      <div><label>Subjects / topics</label><textarea id="subjects" placeholder="Physics: Wave Optics&#10;Math: Differential Calculus&#10;Python: DSA"></textarea></div>
+      <div>
+        <label>Study hours per day</label><input id="hours" type="number" value="2" min="1" max="12">
+        <label>Plan length (days)</label><input id="days" type="number" value="7" min="1" max="60">
+        <label>Target / exam date</label><input id="examDate" type="date">
+        <label>Priority</label>
+        <select id="priority"><option value="balanced">Balanced</option><option value="difficult">Difficult topics first</option><option value="exam">Exam-focused</option><option value="practice">Practice-focused</option></select>
+      </div>
+    </div>
+    <button class="primary" onclick="generateStudyPlan()">Generate Plan ✨</button>
+    <button class="secondary" onclick="addPlanToTasks()">Add Day 1 to Tasks</button>
+    <button class="danger" onclick="clearStudyPlan()">Clear</button>
+  </div>
+  <div id="studyPlan"></div>
+</section>
+
+<section id="notes" class="page">
+  <h1>Custom Notes 📝</h1><div class="subtitle">Create quick structured notes for a topic.</div>
+  <div class="card">
+    <div class="grid">
+      <input id="noteTopic" placeholder="Topic e.g. Heisenberg Uncertainty Principle">
+      <input id="noteSubject" placeholder="Subject e.g. Physics">
+    </div>
+    <select id="noteStyle"><option>Quick Revision</option><option>Detailed</option><option>Exam Prep</option></select>
+    <button class="primary" onclick="generateNotes()">Generate Notes ✨</button>
+    <button class="danger" onclick="clearNotes()">Clear</button>
+  </div>
+  <div id="notesOutput"></div>
+</section>
+
+<section id="history" class="page">
+  <h1>History 🕰️</h1><div class="subtitle">Your completed days.</div>
+  <div id="historyList"></div>
+</section>
+
+<section id="settings" class="page">
+  <h1>Settings ⚙️</h1>
+  <div class="card">
+    <h2>Theme</h2>
+    <button class="primary" onclick="toggleNight()">Toggle Day / Night 🌙</button>
+  </div>
+  <div class="card">
+    <h2>Daily Progress Report</h2>
+    <p class="small">Save an email address for future report integration. A browser-only HTML file cannot send email by itself; that requires an email service/backend.</p>
+    <input id="email" type="email" placeholder="yourname@gmail.com">
+    <button class="primary" onclick="saveEmail()">Save Email</button>
+    <p id="emailSaved" class="small"></p>
+  </div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const today=()=>new Date().toISOString().slice(0,10);
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+
+function page(id){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  $(id).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  [...document.querySelectorAll('.nav button')].find(b=>b.getAttribute('onclick')?.includes("'"+id+"'"))?.classList.add('active');
+  if(id==='dashboard')dashboard();
+  if(id==='results')yesterday();
+  if(id==='goals')renderGoals();
+  if(id==='study')renderStudyPlan();
+  if(id==='notes')loadNotes();
+  if(id==='history')renderHistory();
+}
+
+function theme(){
+  const hour=new Date().getHours();
+  const manual=localStorage.getItem('tbNight');
+  document.body.classList.toggle('night',manual==='true'||(manual===null&&(hour>=19||hour<6)));
+}
+function toggleNight(){
+  localStorage.setItem('tbNight',document.body.classList.contains('night')?'false':'true');theme();
+}
+function greeting(){
+  const h=new Date().getHours();
+  $('greeting').textContent=h<12?'Good morning 🌷':h<17?'Good afternoon 🌼':'Good evening 🌙';
+  $('date').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+}
+
+let tasks=JSON.parse(localStorage.getItem('tbTasks')||'[]');
+function saveTasks(){localStorage.setItem('tbTasks',JSON.stringify(tasks));}
+function renderTasks(){
+  $('tasks').innerHTML=tasks.length?tasks.map((t,i)=>`
+    <div class="task ${t.done?'done':''}">
+      <input type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${i})">
+      <span>${escapeHTML(t.text)}</span>
+      <button class="danger" onclick="deleteTask(${i})">×</button>
+    </div>`).join(''):'<p class="small">No tasks yet. Add your first task above 🌱</p>';
+  progress();
+}
+function addTask(){
+  const v=$('taskInput').value.trim();if(!v)return;
+  tasks.push({text:v,done:false});$('taskInput').value='';saveTasks();renderTasks();
+}
+function toggleTask(i){tasks[i].done=!tasks[i].done;saveTasks();renderTasks();}
+function deleteTask(i){tasks.splice(i,1);saveTasks();renderTasks();}
+function progress(){
+  const done=tasks.filter(t=>t.done).length,total=tasks.length,p=total?done/total*100:0;
+  $('bar').style.width=p+'%';$('counter').textContent=`${done} / ${total} completed`;
+}
+let timerStart=null,timerInterval=null;
+function startTimer(){
+  if(timerInterval)return;
+  timerStart=Date.now()-(timerStart?elapsed():0);
+  timerInterval=setInterval(updateTimer,1000);updateTimer();
+}
+function elapsed(){return timerStart?Date.now()-timerStart:0}
+function stopTimer(){clearInterval(timerInterval);timerInterval=null;}
+function updateTimer(){
+  let s=Math.floor(elapsed()/1000),h=Math.floor(s/3600);s%=3600;
+  let m=Math.floor(s/60);s%=60;
+  $('timer').textContent=[h,m,s].map(x=>String(x).padStart(2,'0')).join(':');
+}
+function finishDay(){
+  if(!tasks.length)return alert('Add at least one task first.');
+  const history=JSON.parse(localStorage.getItem('tbHistory')||'[]');
+  const done=tasks.filter(t=>t.done).length;
+  history.push({date:today(),total:tasks.length,done,time:$('timer').textContent});
+  localStorage.setItem('tbHistory',JSON.stringify(history));
+  alert(`Day finished! 🌸 You completed ${done}/${tasks.length} tasks.`);
+  renderTasks();
+}
+function newDay(){tasks=[];saveTasks();renderTasks();$('timer').textContent='00:00:00';timerStart=null;stopTimer();}
+function motivation(){
+ const arr=['Small steps still count. 🌱','You are building your future one task at a time. ✨','Progress does not need to be perfect. 🌼','One thing at a time. You’ve got this. 💜'];
+ $('motivation').textContent=arr[Math.floor(Math.random()*arr.length)];
+}
+
+function dashboard(){
+ const h=JSON.parse(localStorage.getItem('tbHistory')||'[]');
+ $('daysTracked').textContent=h.length;
+ $('tasksDone').textContent=h.reduce((a,x)=>a+x.done,0);
+ $('streak').textContent=streak(h);
+}
+function streak(h){
+ const dates=new Set(h.map(x=>x.date));let d=new Date(),n=0;
+ while(dates.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}
+ return n;
+}
+function yesterday(){
+ const h=JSON.parse(localStorage.getItem('tbHistory')||'[]'),x=h[h.length-1];
+ $('yesterday').innerHTML=x?`<h2>Latest recorded day 🌸</h2><p><b>${x.date}</b></p><p>Tasks completed: <b>${x.done}/${x.total}</b></p><p>Focus timer: <b>${x.time}</b></p>`:'<h2>No completed day yet</h2><p>Finish a day to see your result here.</p>';
+}
+function renderHistory(){
+ const h=JSON.parse(localStorage.getItem('tbHistory')||'[]').slice().reverse();
+ $('historyList').innerHTML=h.length?h.map(x=>`<div class="card"><b>${x.date}</b><p>${x.done}/${x.total} tasks completed · Focus: ${x.time}</p></div>`).join(''):'<div class="card">No history yet 🌱</div>';
+}
+
+let goals=JSON.parse(localStorage.getItem('tbGoals')||'[]');
+function saveGoals(){localStorage.setItem('tbGoals',JSON.stringify(goals));}
+function addGoal(){
+ const text=$('goalInput').value.trim();if(!text)return;
+ goals.push({text,date:$('goalDate').value||'',progress:0});saveGoals();$('goalInput').value='';$('goalDate').value='';renderGoals();
+}
+function goalUp(i){goals[i].progress=Math.min(100,goals[i].progress+10);saveGoals();renderGoals();}
+function goalDelete(i){goals.splice(i,1);saveGoals();renderGoals();}
+function renderGoals(){
+ $('goalsList').innerHTML=goals.length?goals.map((g,i)=>`<div class="goal"><b>${escapeHTML(g.text)}</b><p class="small">${g.date?'Target: '+g.date:''}</p><div class="progress"><div style="width:${g.progress}%"></div></div><small>${g.progress}%</small><br><button class="secondary" onclick="goalUp(${i})">+10%</button> <button class="danger" onclick="goalDelete(${i})">Delete</button></div>`).join(''):'<div class="card">No dreams added yet 🌱</div>';
+}
+
+function generateStudyPlan(){
+ const raw=$('subjects').value.split('\n').map(x=>x.trim()).filter(Boolean),hours=Math.max(1,+$('hours').value||2),days=Math.max(1,+$('days').value||7),priority=$('priority').value;
+ if(!raw.length)return alert('Enter at least one subject or topic.');
+ const plan=[];
+ for(let d=1;d<=days;d++){
+   const sessions=[],a=raw[(d-1)%raw.length],b=raw[d%raw.length];
+   const first=Math.max(.5,hours*.55),second=Math.max(.5,hours-first);
+   let activity=priority==='practice'?'Practice questions':priority==='exam'?'Timed exam-style questions':priority==='difficult'?'Deep study + worked examples':'Learn + revise';
+   sessions.push({topic:a,duration:first.toFixed(1),activity});
+   if(b&&hours>=1.5)sessions.push({topic:b,duration:second.toFixed(1),activity:priority==='practice'?'Problem solving':'Revision + practice'});
+   plan.push({day:d,sessions});
+ }
+ localStorage.setItem('tbStudyPlan',JSON.stringify(plan));renderStudyPlan();
+}
+function renderStudyPlan(){
+ const p=JSON.parse(localStorage.getItem('tbStudyPlan')||'null');
+ $('studyPlan').innerHTML=p?p.map(d=>`<div class="plan-day"><h3>Day ${d.day}</h3>${d.sessions.map(s=>`<div class="session"><b>${escapeHTML(s.topic)}</b><br><span class="small">${s.duration} hr · ${escapeHTML(s.activity)}</span></div>`).join('')}</div>`).join(''):'<div class="card">Your generated plan will appear here 📚</div>';
+}
+function clearStudyPlan(){localStorage.removeItem('tbStudyPlan');renderStudyPlan();}
+function addPlanToTasks(){
+ const p=JSON.parse(localStorage.getItem('tbStudyPlan')||'null');if(!p?.[0])return alert('Generate a study plan first.');
+ p[0].sessions.forEach(s=>tasks.push({text:`Study: ${s.topic} — ${s.activity}`,done:false}));
+ saveTasks();renderTasks();alert('Day 1 study sessions added to your tasks! 📚');
+}
+
+function generateNotes(){
+ const topic=$('noteTopic').value.trim(),subject=$('noteSubject').value.trim()||'General',style=$('noteStyle').value;
+ if(!topic)return alert('Enter a topic first.');
+ let formula='Write the main formula, rule, algorithm, or method here.';
+ let mistakes='Watch for sign errors, skipped steps, unit mistakes, and confusing similar concepts.';
+ if(/physics/i.test(subject))formula='Formula / law: write the relevant equation, define each symbol, then note SI units.';
+ if(/math/i.test(subject))formula='Method: identify the given expression, choose the correct rule, substitute carefully, and simplify.';
+ if(/python|program/i.test(subject))formula='Code pattern: input → process → output. Trace variables after each important line.';
+ const html=`<div class="card note"><h2>${escapeHTML(topic)}</h2><p class="small">${escapeHTML(subject)} · ${escapeHTML(style)}</p><h3>💡 Core idea</h3><p>Explain ${escapeHTML(topic)} in 2–3 simple sentences using your own words.</p><h3>🔑 Key concepts</h3><ul><li>Definition / meaning</li><li>Important parts or steps</li><li>One simple example</li></ul><h3>📌 Formula / Method</h3><p>${escapeHTML(formula)}</p><h3>⚠️ Common mistakes</h3><p>${escapeHTML(mistakes)}</p><h3>🧠 Self-test</h3><ol><li>What is ${escapeHTML(topic)}?</li><li>What are its key steps or rules?</li><li>Can you solve one example without looking?</li></ol></div>`;
+ $('notesOutput').innerHTML=html;localStorage.setItem('tbLastNotes',html);
+}
+function loadNotes(){const n=localStorage.getItem('tbLastNotes');$('notesOutput').innerHTML=n||'<div class="card">Your notes will appear here 📝</div>'}
+function clearNotes(){localStorage.removeItem('tbLastNotes');loadNotes();}
+function saveEmail(){
+ const e=$('email').value.trim();localStorage.setItem('tbEmail',e);$('emailSaved').textContent=e?'Saved locally: '+e:'Email cleared.';
+}
+function loadEmail(){$('email').value=localStorage.getItem('tbEmail')||''}
+
+greeting();theme();renderTasks();renderGoals();loadEmail();motivation();renderStudyPlan();loadNotes();
+</script>
+</body>
+</html>
