@@ -1,350 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TaskBloom 🌸</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AWSSBG × MVJCE — Students. Cloud. Real Impact.</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#fff7fb,#eefaf5);color:#39445c;transition:.4s}
-body.night{background:linear-gradient(135deg,#17233d,#243653);color:#eef4ff}
-.sidebar{position:fixed;left:0;top:0;width:230px;height:100vh;padding:28px 18px;background:#ffffffcc;backdrop-filter:blur(12px);box-shadow:4px 0 20px #7c8ba522;z-index:10}
-body.night .sidebar{background:#17243dcc}
-.logo{font-size:27px;font-weight:800;color:#7c83d6;margin-bottom:28px;text-align:center}
-.nav button{width:100%;border:0;background:transparent;padding:13px 14px;margin:4px 0;border-radius:14px;text-align:left;color:inherit;font-size:15px;cursor:pointer}
-.nav button:hover,.nav button.active{background:#e8e6ff;color:#5f62ad}
-body.night .nav button:hover,body.night .nav button.active{background:#34466d;color:#fff}
-.main{margin-left:230px;padding:38px;min-height:100vh;position:relative;overflow:hidden}
-.cloud{position:fixed;font-size:55px;opacity:.45;animation:float 35s linear infinite;z-index:0;pointer-events:none}
-.c1{top:8%;left:25%}.c2{top:28%;left:75%;animation-duration:45s}.c3{top:65%;left:40%;animation-duration:50s}
-@keyframes float{0%{transform:translateX(-150px)}100%{transform:translateX(110vw)}}
-.stars{display:none;position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:55px 55px;opacity:.25}
-body.night .stars{display:block}
-.page{display:none;max-width:1100px;margin:auto;position:relative;z-index:2}
-.page.active{display:block}
-h1{font-size:38px;margin:5px 0 8px}
-h2{margin-top:0}
-.subtitle{color:#78839a;margin-bottom:28px}
-.card{background:#ffffffd9;border-radius:24px;padding:25px;margin:18px 0;box-shadow:0 10px 30px #65708b18;backdrop-filter:blur(10px)}
-body.night .card{background:#263755dd;color:#eef4ff}
-input,select,textarea{width:100%;padding:13px 15px;border:1px solid #dce1ee;border-radius:13px;margin:7px 0;background:#fff;color:#39445c;font-size:14px}
-body.night input,body.night select,body.night textarea{background:#1c2b48;color:#fff;border-color:#435474}
-textarea{min-height:130px;resize:vertical}
-button.primary,.primary{border:0;background:#8c91df;color:white;padding:12px 18px;border-radius:13px;cursor:pointer;font-weight:700}
-button.secondary{border:0;background:#e8e8fb;color:#5d62a9;padding:10px 15px;border-radius:12px;cursor:pointer}
-button.danger{border:0;background:#ffdede;color:#a14b4b;padding:9px 13px;border-radius:11px;cursor:pointer}
-.task{display:flex;align-items:center;gap:12px;padding:14px;border-radius:15px;background:#f8f9fd;margin:9px 0}
-body.night .task{background:#1d2c49}
-.task.done{opacity:.6;text-decoration:line-through}
-.task span{flex:1}
-.progress{height:13px;background:#e8eaf2;border-radius:20px;overflow:hidden;margin:15px 0}
-.progress div{height:100%;background:#9b9fe5;width:0;transition:.4s}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.stat{padding:20px;border-radius:18px;background:#f6f5ff;text-align:center}
-body.night .stat{background:#1e2e4d}
-.stat b{display:block;font-size:28px;color:#777bd0;margin-bottom:5px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.goal,.plan-day,.note{padding:18px;border-radius:17px;background:#f8f9fd;margin:12px 0}
-body.night .goal,body.night .plan-day,body.night .note{background:#1d2c49}
-.small{font-size:13px;color:#7b8599}
-.timer{font-size:32px;font-weight:800;text-align:center;margin:10px}
-.session{padding:12px;margin:8px 0;background:#fff;border-radius:12px}
-body.night .session{background:#263755}
-@media(max-width:800px){
-.sidebar{width:75px;padding:20px 8px}.logo{font-size:20px}.nav button{font-size:0;text-align:center}.nav button::first-letter{font-size:20px}
-.main{margin-left:75px;padding:20px}.grid,.stats{grid-template-columns:1fr}
-}
+:root{--bg:#05070A;--sf:#111820;--ac:#FFB547;--tx:#F3F0EA;--mu:#8b929a;color-scheme:dark;box-sizing:border-box}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:2;opacity:0;pointer-events:none}
+.sec{position:fixed;inset:0;z-index:3;display:none;overflow-y:auto;overflow-x:hidden;padding:88px 6vw 110px;background:var(--bg);will-change:transform}
+.sec.on{display:block}
+.sec::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+ radial-gradient(60% 50% at var(--gx,70%) var(--gy,100%),#ffb54726,transparent 70%),
+ repeating-linear-gradient(90deg,#ffb5470a 0 1px,transparent 1px 64px),repeating-linear-gradient(0deg,#ffb5470a 0 1px,transparent 1px 64px)}
+.in{max-width:1100px;margin:0 auto}
+h1{font-size:clamp(2.5rem,7.4vw,5.6rem);line-height:1.02;font-weight:300;letter-spacing:-.025em}
+h2{font-size:clamp(1.9rem,4.6vw,3.3rem);line-height:1.1;font-weight:300;letter-spacing:-.02em;max-width:18ch}
+h3{font-size:1.1rem;font-weight:600;margin-bottom:6px}
+.am{color:var(--ac)}
+.lead{color:var(--mu);max-width:56ch;margin:18px 0 26px;font-size:1.08rem}
+.btn{display:inline-block;border:1px solid var(--ac);background:var(--ac);color:#1a1100;padding:12px 24px;border-radius:999px;font:600 .95rem inherit;cursor:pointer;text-decoration:none;margin:0 10px 10px 0}
+.btn.g{background:transparent;color:var(--ac)}
+.btn:hover{box-shadow:0 0 24px #ffb54766}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:30px}
+.card{background:var(--sf);border:1px solid #ffb54720;border-radius:14px;padding:20px;transition:border-color .25s}
+.card:hover{border-color:#ffb547aa}
+.card p,.mu{color:var(--mu);font-size:.93rem}
+.vis{height:90px;margin:-6px -6px 14px;border-radius:9px;background:radial-gradient(circle at 80% 120%,#ffb54755,transparent 60%),repeating-linear-gradient(135deg,#ffb54712 0 2px,transparent 2px 12px),#0a1017;display:grid;place-items:center;color:var(--ac);font:600 1.5rem ui-monospace,monospace}
+.tag{display:inline-block;font:.72rem ui-monospace,monospace;border:1px solid #ffb54755;color:var(--ac);border-radius:6px;padding:1px 8px;margin:8px 6px 0 0}
+.stats{display:flex;gap:34px;flex-wrap:wrap;margin-top:38px}
+.stats b{display:block;font-size:2.1rem;font-weight:300;color:var(--ac)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin-top:24px;padding-bottom:4px}
+.chip{flex:none;background:transparent;color:var(--tx);border:1px solid #ffffff2a;border-radius:999px;padding:6px 16px;cursor:pointer;font:inherit;font-size:.88rem}
+.chip.on{background:var(--ac);color:#1a1100;border-color:var(--ac)}
+.av{width:54px;height:54px;border-radius:50%;background:#1b2631;border:1px solid #ffb54766;display:grid;place-items:center;color:var(--ac);margin-bottom:10px}
+header{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;gap:18px;padding:calc(12px + env(safe-area-inset-top,0px)) 5vw 12px;background:linear-gradient(#05070Aee,#05070A00)}
+header b{white-space:nowrap;font-weight:600;letter-spacing:.04em}
+nav{display:flex;gap:4px;overflow-x:auto;margin-left:auto}
+nav a{padding:6px 12px;border-radius:999px;text-decoration:none;color:var(--mu);font-size:.88rem;white-space:nowrap}
+nav a.on{color:var(--ac);background:#ffb5471a}
+#ctl{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:6;display:flex;align-items:center;gap:12px;background:#0b1118d9;border:1px solid #ffb54733;border-radius:999px;padding:6px 10px}
+#ctl button{background:none;border:0;color:var(--tx);cursor:pointer;font-size:1.1rem;width:34px;height:34px;border-radius:50%}
+#ctl i{width:9px;height:9px;border-radius:50%;background:#ffffff33;cursor:pointer;border:0;padding:0}
+#ctl i.on{background:var(--ac);box-shadow:0 0 10px var(--ac)}
+#dot{position:fixed;left:0;top:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#ffd58a;box-shadow:0 0 14px 5px #ffb547cc,0 0 40px 14px #ffb54766;z-index:8;opacity:0;pointer-events:none}
+#intro{position:fixed;inset:0;z-index:10}
+#ib{position:absolute;inset:0;background:#000}
+.sc{position:absolute;inset:0;display:grid;place-items:center;text-align:center;opacity:0;padding:20px}
+#pc{position:absolute;inset:0;width:100%;height:100%}
+.nm{letter-spacing:.28em;font-size:clamp(.8rem,2.4vw,1.25rem);margin-top:24px}
+.nm span{display:inline-block;margin:0 .3em}
+.logo{width:clamp(96px,18vw,150px);filter:drop-shadow(0 0 26px #ff990088)}
+.rack{display:grid;gap:6px;width:min(300px,70vw);padding:14px;background:#0b1118;border:1px solid #1d2a38;border-radius:6px;box-shadow:0 0 70px #ffb54722}
+.u{height:22px;background:linear-gradient(#18222d,#0e151d);border-radius:3px;display:flex;align-items:center;justify-content:flex-end;gap:5px;padding:0 8px}
+.u i{width:5px;height:5px;border-radius:50%;animation:bl 1.4s infinite}
+@keyframes bl{50%{opacity:.15}}
+.bar{width:min(300px,70vw);height:3px;background:#ffffff1c;margin:22px auto 8px}
+#bar{height:100%;width:0;background:var(--ac);box-shadow:0 0 10px var(--ac)}
+.skip{position:absolute;right:5vw;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:3;background:none;color:var(--mu);border:1px solid #ffffff33;border-radius:999px;padding:8px 18px;cursor:pointer;font:inherit}
+#toast{position:fixed;left:50%;top:80px;transform:translateX(-50%);z-index:12;background:var(--sf);border:1px solid var(--ac);padding:10px 18px;border-radius:10px;opacity:0;pointer-events:none;max-width:90vw}
+footer{margin-top:50px;color:var(--mu);font-size:.85rem}
+footer button{background:none;border:0;color:var(--ac);cursor:pointer;font:inherit;text-decoration:underline}
+@media(max-width:640px){header b{font-size:.8rem}#ctl{gap:6px}}
 </style>
 </head>
 <body>
-<div class="stars"></div>
-<div class="cloud c1">☁️</div><div class="cloud c2">☁️</div><div class="cloud c3">☁️</div>
+<canvas id="gl"></canvas>
+<header><b>AWSSBG × MVJCE</b><nav id="nav" aria-label="Sections"></nav></header>
 
-<aside class="sidebar">
-  <div class="logo">🌸 TaskBloom</div>
-  <div class="nav">
-    <button onclick="page('home')" class="active">🏠 Home</button>
-    <button onclick="page('dashboard')">📊 Dashboard</button>
-    <button onclick="page('results')">📅 Day Results</button>
-    <button onclick="page('goals')">🌱 Hopes & Dreams</button>
-    <button onclick="page('study')">📚 Study Plan</button>
-    <button onclick="page('notes')">📝 Custom Notes</button>
-    <button onclick="page('history')">🕰️ History</button>
-    <button onclick="page('settings')">⚙️ Settings</button>
-  </div>
-</aside>
+<main id="stage">
+<section class="sec" id="home" aria-label="Home" style="--gx:50%"><div class="in">
+ <h1 class="rv" tabindex="-1">Students. Cloud.<br>Real Impact.</h1>
+ <p class="lead rv">AWSSBG is a student community at MVJCE exploring cloud technologies, building real-world solutions, and collaborating on projects.</p>
+ <div class="rv"><button class="btn" data-go="join">Join the Community</button><button class="btn g" data-go="about">Explore</button></div>
+ <div class="stats rv"><div><b>XX</b><span class="mu">Members</span></div><div><b>XX</b><span class="mu">Events</span></div><div><b>XX</b><span class="mu">Projects</span></div></div>
+ <footer class="rv">Stats are placeholders. <button id="replay">Replay intro</button></footer>
+</div></section>
 
-<main class="main">
-<section id="home" class="page active">
-  <h1 id="greeting">Good evening 🌷</h1>
-  <div class="subtitle" id="date"></div>
+<section class="sec" id="about" aria-label="About" style="--gx:20%;--gy:0%"><div class="in">
+ <h2 class="rv" tabindex="-1">A community building with cloud, for a brighter tomorrow.</h2>
+ <p class="lead rv">AWSSBG is student-led. We turn curiosity about the cloud into shared skills, working projects and lasting friendships on the MVJCE campus.</p>
+ <div class="grid">
+  <div class="card rv"><div class="vis">01</div><h3>Learn</h3><p>Hands-on sessions, study groups and guided paths into cloud fundamentals.</p></div>
+  <div class="card rv"><div class="vis">&lt;/&gt;</div><h3>Build</h3><p>Small teams ship real projects, from first deployment to full applications.</p></div>
+  <div class="card rv"><div class="vis">&amp;</div><h3>Connect</h3><p>Meet peers, mentors and industry speakers who care about building.</p></div>
+ </div></div></section>
 
-  <div class="card">
-    <h2>Today's Tasks</h2>
-    <div style="display:flex;gap:10px">
-      <input id="taskInput" placeholder="Add a task...">
-      <button class="primary" onclick="addTask()">Add</button>
-    </div>
-    <div id="tasks"></div>
-    <div class="progress"><div id="bar"></div></div>
-    <b id="counter">0 / 0 completed</b>
-  </div>
+<section class="sec" id="events" aria-label="Events" style="--gx:80%;--gy:0%"><div class="in">
+ <h2 class="rv" tabindex="-1">Learn. Build. Grow. Together.</h2>
+ <div class="chips hs rv" id="chips"></div><div class="grid" id="evs"></div></div></section>
 
-  <div class="card">
-    <h2>Focus Timer</h2>
-    <div class="timer" id="timer">00:00:00</div>
-    <div style="text-align:center">
-      <button class="primary" onclick="startTimer()">Start</button>
-      <button class="secondary" onclick="stopTimer()">Stop</button>
-    </div>
-  </div>
+<section class="sec" id="projects" aria-label="Projects" style="--gx:30%"><div class="in">
+ <h2 class="rv" tabindex="-1">Ideas to Real-World Impact.</h2>
+ <p class="lead rv">Placeholder projects. Replace with your team’s real work and links.</p>
+ <div class="grid" id="prs"></div></div></section>
 
-  <div class="card" style="text-align:center">
-    <h2>🌼 Little Reminder</h2>
-    <p id="motivation">Small steps still count. Keep going.</p>
-    <button class="primary" onclick="finishDay()">Finish Day ✨</button>
-    <button class="secondary" onclick="newDay()">Start New Day</button>
-  </div>
-</section>
+<section class="sec" id="community" aria-label="Community" style="--gx:60%;--gy:0%"><div class="in">
+ <h2 class="rv" tabindex="-1">The people behind the builds.</h2>
+ <p class="lead rv">Teams, study circles and weekend build sessions. Placeholder profiles until real names and photos are added.</p>
+ <div class="grid" id="mem"></div>
+ <div class="grid">
+  <div class="card rv"><p>“Placeholder testimonial: what joining AWSSBG meant for a member.”</p><p class="am" style="margin-top:8px">Member name, Branch</p></div>
+  <div class="card rv"><p>“Placeholder testimonial: a moment from a workshop or project.”</p><p class="am" style="margin-top:8px">Member name, Branch</p></div>
+ </div></div></section>
 
-<section id="dashboard" class="page">
-  <h1>Dashboard 📊</h1><div class="subtitle">A quick look at your progress.</div>
-  <div class="stats">
-    <div class="stat"><b id="daysTracked">0</b>Days tracked</div>
-    <div class="stat"><b id="tasksDone">0</b>Tasks completed</div>
-    <div class="stat"><b id="streak">0</b>Day streak</div>
-  </div>
-</section>
-
-<section id="results" class="page">
-  <h1>Day Results 📅</h1><div class="subtitle">See how your latest day went.</div>
-  <div class="card" id="yesterday"></div>
-</section>
-
-<section id="goals" class="page">
-  <h1>Hopes & Dreams 🌱</h1><div class="subtitle">Keep the things you care about in sight.</div>
-  <div class="card">
-    <div class="grid">
-      <input id="goalInput" placeholder="Your hope or dream">
-      <input id="goalDate" type="date">
-    </div>
-    <button class="primary" onclick="addGoal()">Add Goal</button>
-  </div>
-  <div id="goalsList"></div>
-</section>
-
-<section id="study" class="page">
-  <h1>Custom Study Plan 📚</h1><div class="subtitle">Build a study schedule around your subjects and target.</div>
-  <div class="card">
-    <div class="grid">
-      <div><label>Subjects / topics</label><textarea id="subjects" placeholder="Physics: Wave Optics&#10;Math: Differential Calculus&#10;Python: DSA"></textarea></div>
-      <div>
-        <label>Study hours per day</label><input id="hours" type="number" value="2" min="1" max="12">
-        <label>Plan length (days)</label><input id="days" type="number" value="7" min="1" max="60">
-        <label>Target / exam date</label><input id="examDate" type="date">
-        <label>Priority</label>
-        <select id="priority"><option value="balanced">Balanced</option><option value="difficult">Difficult topics first</option><option value="exam">Exam-focused</option><option value="practice">Practice-focused</option></select>
-      </div>
-    </div>
-    <button class="primary" onclick="generateStudyPlan()">Generate Plan ✨</button>
-    <button class="secondary" onclick="addPlanToTasks()">Add Day 1 to Tasks</button>
-    <button class="danger" onclick="clearStudyPlan()">Clear</button>
-  </div>
-  <div id="studyPlan"></div>
-</section>
-
-<section id="notes" class="page">
-  <h1>Custom Notes 📝</h1><div class="subtitle">Create quick structured notes for a topic.</div>
-  <div class="card">
-    <div class="grid">
-      <input id="noteTopic" placeholder="Topic e.g. Heisenberg Uncertainty Principle">
-      <input id="noteSubject" placeholder="Subject e.g. Physics">
-    </div>
-    <select id="noteStyle"><option>Quick Revision</option><option>Detailed</option><option>Exam Prep</option></select>
-    <button class="primary" onclick="generateNotes()">Generate Notes ✨</button>
-    <button class="danger" onclick="clearNotes()">Clear</button>
-  </div>
-  <div id="notesOutput"></div>
-</section>
-
-<section id="history" class="page">
-  <h1>History 🕰️</h1><div class="subtitle">Your completed days.</div>
-  <div id="historyList"></div>
-</section>
-
-<section id="settings" class="page">
-  <h1>Settings ⚙️</h1>
-  <div class="card">
-    <h2>Theme</h2>
-    <button class="primary" onclick="toggleNight()">Toggle Day / Night 🌙</button>
-  </div>
-  <div class="card">
-    <h2>Daily Progress Report</h2>
-    <p class="small">Save an email address for future report integration. A browser-only HTML file cannot send email by itself; that requires an email service/backend.</p>
-    <input id="email" type="email" placeholder="yourname@gmail.com">
-    <button class="primary" onclick="saveEmail()">Save Email</button>
-    <p id="emailSaved" class="small"></p>
-  </div>
-</section>
+<section class="sec" id="join" aria-label="Join Us" style="--gx:50%"><div class="in">
+ <h2 class="rv" tabindex="-1">Be a Part of What’s Next.</h2>
+ <p class="lead rv">Any MVJCE student can join. Come to a session, learn alongside others, team up on a project and contribute your own ideas.</p>
+ <div class="grid">
+  <div class="card rv"><h3>Participate</h3><p>Attend workshops, talks and hackathons.</p></div>
+  <div class="card rv"><h3>Collaborate</h3><p>Join a project team that fits your interests.</p></div>
+  <div class="card rv"><h3>Contribute</h3><p>Teach a session, mentor, or help organise events.</p></div>
+ </div>
+ <p class="rv" style="margin-top:30px"><button class="btn" id="joinBtn">Join the Community</button></p>
+</div></section>
 </main>
 
+<div id="dot"></div><div id="toast" role="status"></div>
+
+<div id="intro" role="presentation">
+ <div id="ib"></div><canvas id="pc"></canvas>
+ <div class="sc" id="s1"><div>
+  <svg class="logo" id="logo" viewBox="0 0 9 9" shape-rendering="crispEdges" aria-label="AWS SBG logo placeholder"></svg>
+  <div class="nm"><span>AWS STUDENT BUILDER GROUP</span><span class="am">×</span><span>MVJCE</span></div>
+  <div class="mu" style="letter-spacing:.4em;margin-top:10px;font-size:.8rem">AWSSBG</div></div></div>
+ <div class="sc" id="s2"><div><div class="rack" id="rack"></div><div class="bar"><div id="bar"></div></div><div class="mu" style="font:.78rem ui-monospace,monospace;letter-spacing:.2em">INITIALIZING SERVERS</div></div></div>
+ <div class="sc" id="s3"></div>
+ <button class="skip" id="skip">Skip intro</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
-const $=id=>document.getElementById(id);
-const today=()=>new Date().toISOString().slice(0,10);
-const escapeHTML=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+/* ============ CONTENT (edit here) ============ */
+const JOIN_URL='';                       // paste your registration link
+const SECS=[['home','Home'],['about','About'],['events','Events'],['projects','Projects'],['community','Community'],['join','Join Us']];
+const EVENTS=[
+ ['Cloud Fundamentals Workshop','Upcoming','Workshops','Date TBA','Hands-on introduction to core cloud services.','☁'],
+ ['Build-a-thon','Upcoming','Hackathons','Date TBA','Team event: ship a working cloud project.','{ }'],
+ ['Industry Tech Talk','Upcoming','Tech Talks','Date TBA','A guest speaker shares real engineering stories.','▶'],
+ ['Serverless Lab','Past Events','Workshops','Past session','Placeholder recap of a previous workshop.','λ'],
+ ['Campus Hack Night','Past Events','Hackathons','Past session','Placeholder recap of a previous hackathon.','#'],
+ ['Careers in Cloud','Past Events','Tech Talks','Past session','Placeholder recap of a previous talk.','◎']];
+const PROJECTS=[
+ ['Cloud Infrastructure','Placeholder: a team project on deploying and managing infrastructure.',['Compute','Storage','IaC']],
+ ['Web Applications','Placeholder: a student-built full-stack web application.',['Frontend','API','Database']],
+ ['AI / ML','Placeholder: a machine learning prototype built by members.',['Python','Models','Data']],
+ ['Open Source','Placeholder: a community repository open to contributors.',['Git','Docs','Issues']]];
+const MEMBERS=[['Member Name','Role / Team'],['Member Name','Role / Team'],['Member Name','Role / Team'],['Member Name','Role / Team']];
 
-function page(id){
-  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-  $(id).classList.add('active');
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-  [...document.querySelectorAll('.nav button')].find(b=>b.getAttribute('onclick')?.includes("'"+id+"'"))?.classList.add('active');
-  if(id==='dashboard')dashboard();
-  if(id==='results')yesterday();
-  if(id==='goals')renderGoals();
-  if(id==='study')renderStudyPlan();
-  if(id==='notes')loadNotes();
-  if(id==='history')renderHistory();
-}
+/* ============ HELPERS ============ */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const N=SECS.length;let cur=0,busy=true,spin=false,introTL=null,introOn=false;
+const W=()=>innerWidth,H=()=>innerHeight;
+const toast=t=>{const e=$('#toast');e.textContent=t;gsap.fromTo(e,{opacity:1},{opacity:0,delay:2.4,duration:.5})};
 
-function theme(){
-  const hour=new Date().getHours();
-  const manual=localStorage.getItem('tbNight');
-  document.body.classList.toggle('night',manual==='true'||(manual===null&&(hour>=19||hour<6)));
-}
-function toggleNight(){
-  localStorage.setItem('tbNight',document.body.classList.contains('night')?'false':'true');theme();
-}
-function greeting(){
-  const h=new Date().getHours();
-  $('greeting').textContent=h<12?'Good morning 🌷':h<17?'Good afternoon 🌼':'Good evening 🌙';
-  $('date').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-}
+/* ---- build UI ---- */
+$('#nav').innerHTML=SECS.map((s,i)=>`<a href="#${s[0]}" data-i="${i}">${s[1]}</a>`).join('');
+$('body').insertAdjacentHTML('beforeend',`<div id="ctl"><button id="pv" aria-label="Previous section">‹</button>${SECS.map((s,i)=>`<i role="button" tabindex="0" data-i="${i}" aria-label="Go to ${s[1]}"></i>`).join('')}<button id="nx" aria-label="Next section">›</button></div>`);
+const CATS=['All','Upcoming','Past Events','Workshops','Hackathons','Tech Talks'];
+$('#chips').innerHTML=CATS.map((c,i)=>`<button class="chip${i?'':' on'}">${c}</button>`).join('');
+function drawEvents(f){$('#evs').innerHTML=EVENTS.filter(e=>f==='All'||e[1]===f||e[2]===f).map(e=>`<article class="card"><div class="vis">${e[5]}</div><h3>${e[0]}</h3><p class="am" style="font-size:.82rem">${e[3]} · ${e[2]}</p><p style="margin-top:6px">${e[4]}</p></article>`).join('')}
+drawEvents('All');
+$('#chips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;$$('.chip').forEach(c=>c.classList.toggle('on',c===b));drawEvents(b.textContent)};
+$('#prs').innerHTML=PROJECTS.map(p=>`<article class="card"><h3>${p[0]}</h3><p>${p[1]}</p>${p[2].map(t=>`<span class="tag">${t}</span>`).join('')}<p style="margin-top:12px"><span class="mu">Link coming soon</span></p></article>`).join('');
+$('#mem').innerHTML=MEMBERS.map(m=>`<div class="card"><div class="av">AW</div><h3>${m[0]}</h3><p>${m[1]}</p></div>`).join('');
+$('#logo').innerHTML=["..x.x.x..",".xxxxxxx.","xxxx.xxxx",".xx...xx.","xxx.x.xxx",".xx...xx.","xxxx.xxxx",".xxxxxxx.","..x.x.x.."].map((r,y)=>[...r].map((c,x)=>c=='x'?`<rect x="${x}" y="${y}" width="1.02" height="1.02" fill="#FF9900"/>`:'').join('')).join('');
+$('#rack').innerHTML=Array.from({length:9},()=>`<div class="u">${Array.from({length:4},()=>`<i style="background:${Math.random()>.35?'#FFB547':'#4aa8ff'};animation-delay:${(Math.random()*1.6).toFixed(2)}s"></i>`).join('')}</div>`).join('');
 
-let tasks=JSON.parse(localStorage.getItem('tbTasks')||'[]');
-function saveTasks(){localStorage.setItem('tbTasks',JSON.stringify(tasks));}
-function renderTasks(){
-  $('tasks').innerHTML=tasks.length?tasks.map((t,i)=>`
-    <div class="task ${t.done?'done':''}">
-      <input type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${i})">
-      <span>${escapeHTML(t.text)}</span>
-      <button class="danger" onclick="deleteTask(${i})">×</button>
-    </div>`).join(''):'<p class="small">No tasks yet. Add your first task above 🌱</p>';
-  progress();
-}
-function addTask(){
-  const v=$('taskInput').value.trim();if(!v)return;
-  tasks.push({text:v,done:false});$('taskInput').value='';saveTasks();renderTasks();
-}
-function toggleTask(i){tasks[i].done=!tasks[i].done;saveTasks();renderTasks();}
-function deleteTask(i){tasks.splice(i,1);saveTasks();renderTasks();}
-function progress(){
-  const done=tasks.filter(t=>t.done).length,total=tasks.length,p=total?done/total*100:0;
-  $('bar').style.width=p+'%';$('counter').textContent=`${done} / ${total} completed`;
-}
-let timerStart=null,timerInterval=null;
-function startTimer(){
-  if(timerInterval)return;
-  timerStart=Date.now()-(timerStart?elapsed():0);
-  timerInterval=setInterval(updateTimer,1000);updateTimer();
-}
-function elapsed(){return timerStart?Date.now()-timerStart:0}
-function stopTimer(){clearInterval(timerInterval);timerInterval=null;}
-function updateTimer(){
-  let s=Math.floor(elapsed()/1000),h=Math.floor(s/3600);s%=3600;
-  let m=Math.floor(s/60);s%=60;
-  $('timer').textContent=[h,m,s].map(x=>String(x).padStart(2,'0')).join(':');
-}
-function finishDay(){
-  if(!tasks.length)return alert('Add at least one task first.');
-  const history=JSON.parse(localStorage.getItem('tbHistory')||'[]');
-  const done=tasks.filter(t=>t.done).length;
-  history.push({date:today(),total:tasks.length,done,time:$('timer').textContent});
-  localStorage.setItem('tbHistory',JSON.stringify(history));
-  alert(`Day finished! 🌸 You completed ${done}/${tasks.length} tasks.`);
-  renderTasks();
-}
-function newDay(){tasks=[];saveTasks();renderTasks();$('timer').textContent='00:00:00';timerStart=null;stopTimer();}
-function motivation(){
- const arr=['Small steps still count. 🌱','You are building your future one task at a time. ✨','Progress does not need to be perfect. 🌼','One thing at a time. You’ve got this. 💜'];
- $('motivation').textContent=arr[Math.floor(Math.random()*arr.length)];
-}
+/* ============ THREE.JS EARTH (procedural, no external textures) ============ */
+const cv=$('#gl');let R=null,scene,cam,earth,m1,m2,trails;const Y=new THREE.Vector3(0,1,0);
+function hash(x,y,z){const n=Math.sin(x*127.1+y*311.7+z*74.7)*43758.5453;return n-Math.floor(n)}
+function vn(x,y,z){const xi=Math.floor(x),yi=Math.floor(y),zi=Math.floor(z),a=x-xi,b=y-yi,c=z-zi,u=a*a*(3-2*a),v=b*b*(3-2*b),w=c*c*(3-2*c),l=(p,q,t)=>p+(q-p)*t;
+ return l(l(l(hash(xi,yi,zi),hash(xi+1,yi,zi),u),l(hash(xi,yi+1,zi),hash(xi+1,yi+1,zi),u),v),l(l(hash(xi,yi,zi+1),hash(xi+1,yi,zi+1),u),l(hash(xi,yi+1,zi+1),hash(xi+1,yi+1,zi+1),u),v),w)}
+function earthTex(){ // night-side Earth: dark ocean, dark land, amber city lights, faint circuit traces
+ const w=1024,h=512,c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d'),id=x.createImageData(w,h),cities=[];
+ for(let j=0;j<h;j++)for(let i=0;i<w;i++){const lo=i/w*6.2832,la=(j/h-.5)*3.1416,px=Math.cos(la)*Math.cos(lo),py=Math.sin(la),pz=Math.cos(la)*Math.sin(lo);
+  const f=vn(px*2.2,py*2.2,pz*2.2)*.55+vn(px*4.6,py*4.6,pz*4.6)*.3+vn(px*9.5,py*9.5,pz*9.5)*.15,land=f>.53&&Math.abs(py)<.93,k=(j*w+i)*4;
+  let r=4,g=9,b=16;if(land){r=15;g=20;b=27;if(vn(px*13+9,py*13,pz*13)>.6&&Math.random()<.16)cities.push(i,j)}
+  else if(f>.5){r=8;g=14;b=22}
+  if(Math.abs(f-.53)<.008&&land){r=60;g=42;b=18}
+  id.data[k]=r;id.data[k+1]=g;id.data[k+2]=b;id.data[k+3]=255}
+ x.putImageData(id,0,0);
+ for(let i=0;i<cities.length;i+=2){x.fillStyle=`rgba(255,${160+Math.random()*50|0},${60+Math.random()*40|0},${.55+Math.random()*.45})`;x.fillRect(cities[i],cities[i+1],1.7,1.7)}
+ x.strokeStyle='rgba(255,181,71,.16)';x.lineWidth=1;
+ for(let n=0;n<70;n++){let a=Math.random()*w,b=Math.random()*h;x.beginPath();x.moveTo(a,b);for(let s=0;s<5;s++){Math.random()>.5?a+=(Math.random()-.5)*60:b+=(Math.random()-.5)*40;x.lineTo(a,b)}x.stroke()}
+ const t=new THREE.CanvasTexture(c);t.anisotropy=4;return t}
+function glow(){const c=document.createElement('canvas');c.width=c.height=64;const x=c.getContext('2d'),g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,'#fff');g.addColorStop(.25,'#ffd58a');g.addColorStop(.6,'rgba(255,181,71,.35)');g.addColorStop(1,'rgba(255,181,71,0)');x.fillStyle=g;x.fillRect(0,0,64,64);return new THREE.CanvasTexture(c)}
+function initGL(){
+ try{R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:W()>700});R.setPixelRatio(Math.min(devicePixelRatio,1.75));
+  scene=new THREE.Scene();cam=new THREE.PerspectiveCamera(45,1,.1,100);cam.position.z=6;
+  earth=new THREE.Group();earth.position.y=-6;scene.add(earth);
+  earth.add(new THREE.Mesh(new THREE.SphereGeometry(2,64,48),new THREE.MeshBasicMaterial({map:earthTex()})));
+  earth.add(new THREE.Mesh(new THREE.SphereGeometry(2.14,48,32),new THREE.ShaderMaterial({transparent:true,side:THREE.BackSide,blending:THREE.AdditiveBlending,depthWrite:false,
+   vertexShader:'varying vec3 n;void main(){n=normalize(normalMatrix*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+   fragmentShader:'varying vec3 n;void main(){float i=pow(.72-dot(n,vec3(0.,0.,1.)),3.);gl_FragColor=vec4(1.,.72,.3,1.)*i*1.25;}'})));
+  const gt=glow(),mk=()=>{const s=new THREE.Sprite(new THREE.SpriteMaterial({map:gt,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthTest:false}));s.scale.setScalar(.5);earth.add(s);return s};
+  m1=mk();m2=mk();
+  const pts=[],r=()=>Math.random()-.5;for(let i=0;i<260;i++){const v=new THREE.Vector3(r(),r()*.6,r()).normalize().multiplyScalar(2.2+Math.random()*.5);pts.push(v.x,v.y,v.z)}
+  const tg=new THREE.BufferGeometry();tg.setAttribute('position',new THREE.Float32BufferAttribute(pts,3));
+  trails=new THREE.Points(tg,new THREE.PointsMaterial({color:0xffb547,size:.035,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false}));earth.add(trails);
+  const sp=[];for(let i=0;i<500;i++){const v=new THREE.Vector3(r(),r(),r()-.3).normalize().multiplyScalar(30);sp.push(v.x,v.y,-Math.abs(v.z))}
+  const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));
+  scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xf3f0ea,size:.06,transparent:true,opacity:.5})));
+  resize();
+ }catch(e){R=null;const st=()=>({position:{y:0,copy(){return this},applyAxisAngle(){return this}},rotation:{y:0},material:{opacity:0},scale:{x:0,y:0}});earth=st();m1=st();m2=st();trails=st();console.warn('WebGL unavailable; 2D fallback',e)}}
+function resize(){if(!R)return;R.setSize(W(),H(),false);cam.aspect=W()/H();cam.updateProjectionMatrix();earth.scale.setScalar(Math.min(1.1,Math.max(.72,cam.aspect)))}
+addEventListener('resize',resize);
+gsap.ticker.add((t,dt)=>{if(!R||+cv.style.opacity<=0)return;if(spin)earth.rotation.y+=dt*.00006;R.render(scene,cam)});
+/* screen position of a marker sprite (or fixed fallback when there is no WebGL) */
+const _v=new THREE.Vector3();
+function proj(m){if(!R)return{x:W()/2,y:H()*.78};earth.updateMatrixWorld(true);m.getWorldPosition(_v);_v.project(cam);return{x:(_v.x+1)/2*W(),y:(1-_v.y)/2*H()}}
 
-function dashboard(){
- const h=JSON.parse(localStorage.getItem('tbHistory')||'[]');
- $('daysTracked').textContent=h.length;
- $('tasksDone').textContent=h.reduce((a,x)=>a+x.done,0);
- $('streak').textContent=streak(h);
+/* ============ NAVIGATION & THE EARTH PORTAL ============ */
+const P1=new THREE.Vector3(0,.88,.47).normalize().multiplyScalar(2); // departure point near the horizon
+const dot=$('#dot');
+function show(i){$$('.sec').forEach((s,k)=>s.classList.toggle('on',k===i));$$('#nav a').forEach(a=>a.classList.toggle('on',+a.dataset.i===i));$$('#ctl i').forEach(a=>a.classList.toggle('on',+a.dataset.i===i));document.title=SECS[i][1]+' — AWSSBG × MVJCE'}
+function reset(el){gsap.set(el,{clearProps:'transform,filter,opacity'})}
+function go(to,dir,push=true){
+ if(busy||to===cur||to<0||to>=N)return;busy=true;dir=dir||(to>cur?1:-1);
+ const a=$('#'+SECS[cur][0]),b=$('#'+SECS[to][0]);
+ if(push)history.pushState(null,'','#'+SECS[to][0]);
+ if(RM){gsap.to(a,{opacity:0,duration:.25,onComplete(){reset(a);cur=to;show(cur);gsap.from(b,{opacity:0,duration:.25,onComplete:()=>{busy=false;focusSec(b)}})}});return}
+ const th=dir*Math.PI/3,                       // ≈60° of planetary rotation
+  S={a:0,c:0},cx=W()/2,cy=H()/2,rv=$$('#'+SECS[to][0]+' .rv');
+ spin=false;
+ if(R){m1.position.copy(P1);m2.position.copy(P1).applyAxisAngle(Y,-th);   // m2 sits where m1 will be after rotating
+  earth.position.y=-4.4;m1.material.opacity=m2.material.opacity=0;trails.material.opacity=0}
+ let D1={x:cx,y:cy},D2={x:cx,y:cy};
+ const upA=()=>{D1=proj(m1);const p=S.a,e=p*p;       // Phase A: whole page → dot on the horizon
+  gsap.set(a,{x:(D1.x-cx)*e,y:(D1.y-cy)*e,scale:1-.98*e,filter:`blur(${p*9}px)`,opacity:1-Math.max(0,p-.55)*1.5,transformOrigin:'50% 50%',pointerEvents:'none'});
+  gsap.set(dot,{x:cx+(D1.x-cx)*e,y:cy+(D1.y-cy)*e,opacity:Math.min(1,p*2.5),scale:.6+p*.6})};
+ const upB=()=>{const p=dot._p||0;D1=proj(m1);gsap.set(dot,{x:D1.x,y:D1.y,opacity:1-p})};
+ const upC=()=>{D2=proj(m2);const p=S.c,e=1-Math.pow(1-p,3); // Phase C: dot → full slide
+  gsap.set(b,{x:(D2.x-cx)*(1-e),y:(D2.y-cy)*(1-e),scale:.02+.98*e,filter:`blur(${(1-e)*8}px)`,opacity:Math.min(1,p*3),transformOrigin:'50% 50%'});
+  gsap.set(dot,{x:D2.x+(cx-D2.x)*e,y:D2.y+(cy-D2.y)*e,opacity:1-Math.max(0,p-.5)*2,scale:1+p*.5})};
+ const tl=gsap.timeline({defaults:{ease:'power2.inOut'},onComplete(){
+  reset(b);reset(dot);gsap.set(dot,{opacity:0});cv.style.opacity=0;spin=true;busy=false;focusSec(b)}});
+ tl.set(cv,{opacity:1},0);
+ // 0.0–0.8  A: contract into the dot while Earth rises under it
+ tl.to(S,{a:1,duration:.8,ease:'none',onUpdate:upA},0)
+   .to(earth.position,{y:-2.6,duration:.9,ease:'power2.out'},0)
+   .to(m1.material,{opacity:1,duration:.4},.3)
+ // 0.8–2.0  B: Earth rotates ≈60° (spherical, with orbiting light trails)
+   .to(dot,{_p:1,duration:.6,ease:'none',onUpdate:upB},.8)
+   .to(trails.material,{opacity:.8,duration:.4},.8)
+   .to(earth.rotation,{y:'+='+th,duration:1.2,ease:'power2.inOut'},.8)
+   .to(trails.rotation,{y:th*1.5,duration:1.2},.8)
+   .to(trails.material,{opacity:0,duration:.4},1.7)
+   .to(m1.material,{opacity:0,duration:.3},1.0)
+   .to(m2.material,{opacity:1,duration:.3},1.7)
+   .to(m2.scale,{x:.8,y:.8,duration:.4},1.7)
+ // 2.0–3.0  C: swap slides, dot grows outward, new slide expands from it, Earth sinks
+   .add(()=>{reset(a);dot._p=0;cur=to;show(cur);gsap.set(b,{opacity:0})},2)
+   .to(S,{c:1,duration:1,ease:'none',onUpdate:upC},2)
+   .to(earth.position,{y:-6.5,duration:.9,ease:'power2.in'},2.1)
+   .to(cv,{opacity:0,duration:.35,ease:'none'},2.65)
+   .fromTo(rv,{y:22,opacity:0},{y:0,opacity:1,stagger:.05,duration:.5,ease:'power2.out',clearProps:'transform,opacity'},2.45);
 }
-function streak(h){
- const dates=new Set(h.map(x=>x.date));let d=new Date(),n=0;
- while(dates.has(d.toISOString().slice(0,10))){n++;d.setDate(d.getDate()-1)}
- return n;
-}
-function yesterday(){
- const h=JSON.parse(localStorage.getItem('tbHistory')||'[]'),x=h[h.length-1];
- $('yesterday').innerHTML=x?`<h2>Latest recorded day 🌸</h2><p><b>${x.date}</b></p><p>Tasks completed: <b>${x.done}/${x.total}</b></p><p>Focus timer: <b>${x.time}</b></p>`:'<h2>No completed day yet</h2><p>Finish a day to see your result here.</p>';
-}
-function renderHistory(){
- const h=JSON.parse(localStorage.getItem('tbHistory')||'[]').slice().reverse();
- $('historyList').innerHTML=h.length?h.map(x=>`<div class="card"><b>${x.date}</b><p>${x.done}/${x.total} tasks completed · Focus: ${x.time}</p></div>`).join(''):'<div class="card">No history yet 🌱</div>';
-}
+function focusSec(b){const h=b.querySelector('[tabindex="-1"]');h&&h.focus({preventScroll:true});b.scrollTop=0}
+const next=()=>go(cur+1,1),prev=()=>go(cur-1,-1);
+$('#nx').onclick=next;$('#pv').onclick=prev;
+document.addEventListener('click',e=>{const t=e.target.closest('[data-i],[data-go]');if(!t)return;e.preventDefault();
+ const i=t.dataset.go?SECS.findIndex(s=>s[0]===t.dataset.go):+t.dataset.i;go(i)});
+document.addEventListener('keydown',e=>{
+ if(e.target.matches('input,textarea,select'))return;
+ if(e.key==='Enter'&&e.target.dataset.i!==undefined)return go(+e.target.dataset.i);
+ if(introOn){if(e.key==='Escape')skipIntro();return}
+ if(e.key==='ArrowRight'||e.key==='PageDown')next();else if(e.key==='ArrowLeft'||e.key==='PageUp')prev()});
+/* wheel: only navigate once the section has no more to scroll; one step per gesture */
+let wl=0;
+addEventListener('wheel',e=>{
+ if(introOn||busy||e.target.closest('input,textarea,select,.hs'))return;
+ const s=$('#'+SECS[cur][0]),d=Math.abs(e.deltaY)>Math.abs(e.deltaX)?e.deltaY:e.deltaX;
+ if(Math.abs(d)<30)return;
+ if(e.deltaY>0&&s.scrollTop+s.clientHeight<s.scrollHeight-4&&Math.abs(e.deltaY)>=Math.abs(e.deltaX))return;
+ if(e.deltaY<0&&s.scrollTop>4&&Math.abs(e.deltaY)>=Math.abs(e.deltaX))return;
+ if(Date.now()-wl<900)return;wl=Date.now();d>0?next():prev()},{passive:true});
+/* touch: horizontal swipe triggers the portal; vertical drags still scroll the page */
+let t0=null;
+addEventListener('touchstart',e=>{t0=e.target.closest('input,textarea,select,.hs')||introOn?null:{x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
+addEventListener('touchend',e=>{if(!t0||busy)return;const dx=e.changedTouches[0].clientX-t0.x,dy=e.changedTouches[0].clientY-t0.y;t0=null;
+ if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.3)dx<0?next():prev()},{passive:true});
+addEventListener('popstate',()=>{const i=SECS.findIndex(s=>'#'+s[0]===location.hash);if(i>=0)go(i,0,false)});
+$('#joinBtn').onclick=()=>JOIN_URL?open(JOIN_URL,'_blank','noopener'):toast('Set JOIN_URL in the script to your registration link.');
 
-let goals=JSON.parse(localStorage.getItem('tbGoals')||'[]');
-function saveGoals(){localStorage.setItem('tbGoals',JSON.stringify(goals));}
-function addGoal(){
- const text=$('goalInput').value.trim();if(!text)return;
- goals.push({text,date:$('goalDate').value||'',progress:0});saveGoals();$('goalInput').value='';$('goalDate').value='';renderGoals();
-}
-function goalUp(i){goals[i].progress=Math.min(100,goals[i].progress+10);saveGoals();renderGoals();}
-function goalDelete(i){goals.splice(i,1);saveGoals();renderGoals();}
-function renderGoals(){
- $('goalsList').innerHTML=goals.length?goals.map((g,i)=>`<div class="goal"><b>${escapeHTML(g.text)}</b><p class="small">${g.date?'Target: '+g.date:''}</p><div class="progress"><div style="width:${g.progress}%"></div></div><small>${g.progress}%</small><br><button class="secondary" onclick="goalUp(${i})">+10%</button> <button class="danger" onclick="goalDelete(${i})">Delete</button></div>`).join(''):'<div class="card">No dreams added yet 🌱</div>';
-}
+/* ============ OPENING CINEMATIC (≈12 s, skippable, shown once per browser) ============ */
+const pc=$('#pc'),px=pc.getContext('2d');let mode='p',parts=[],streams=[];
+function pcSize(){pc.width=W();pc.height=H()}addEventListener('resize',pcSize);pcSize();
+for(let i=0;i<60;i++)parts.push({x:Math.random(),y:Math.random(),v:.02+Math.random()*.05,r:Math.random()*1.4+.4});
+function mkStreams(){streams=Array.from({length:16},(_,i)=>{const s=i%2?1:-1,x0=W()*(.5+s*(.2+Math.random()*.4)),y0=H()*(.05+Math.random()*.5);
+ return{x0,y0,cx:W()/2+s*W()*.12,cy:H()*.45,x1:W()/2+(Math.random()-.5)*60,y1:H()*.88,d:Array.from({length:5},()=>Math.random())}})}
+function drawPC(t,dt){if(!introOn)return;px.clearRect(0,0,pc.width,pc.height);
+ if(mode==='p'){px.fillStyle='rgba(255,181,71,.5)';parts.forEach(p=>{p.y-=p.v*dt/1000;if(p.y<0)p.y=1;px.beginPath();px.arc(p.x*W(),p.y*H(),p.r,0,6.3);px.fill()})}
+ else if(mode==='s'){px.lineWidth=1;streams.forEach(s=>{px.strokeStyle='rgba(255,181,71,.13)';px.beginPath();px.moveTo(s.x0,s.y0);px.quadraticCurveTo(s.cx,s.cy,s.x1,s.y1);px.stroke();
+  s.d.forEach((u,k)=>{u=s.d[k]=(u+dt/2600)%1;const a=1-u,x=a*a*s.x0+2*a*u*s.cx+u*u*s.x1,y=a*a*s.y0+2*a*u*s.cy+u*u*s.y1;
+   px.fillStyle=`rgba(255,200,110,${.9*Math.sin(u*3.14)})`;px.shadowColor='#ffb547';px.shadowBlur=12;px.beginPath();px.arc(x,y,1.6+u*1.4,0,6.3);px.fill();px.shadowBlur=0})})}}
+gsap.ticker.add((t,dt)=>drawPC(t,dt));
+function endIntro(){introOn=false;mode='p';$('#intro').style.display='none';try{localStorage.setItem('awssbg_intro','1')}catch(e){}busy=false;spin=true}
+function skipIntro(){if(!introOn)return;introTL&&introTL.kill();gsap.killTweensOf('#intro *');cv.style.opacity=0;if(R)earth.position.y=-6.5;show(cur);reset('#'+SECS[cur][0]);endIntro()}
+function runIntro(){
+ introOn=true;busy=true;$('#intro').style.display='block';mkStreams();gsap.set('#ib',{opacity:1});gsap.set('.sc',{opacity:0});mode='p';
+ show(cur);const home=$('#'+SECS[cur][0]);
+ introTL=gsap.timeline({defaults:{ease:'power2.out'},onComplete(){reset(home);endIntro()}})
+ // Scene 1 — identity
+  .to('#s1',{opacity:1,duration:1},.2).from('.logo',{scale:.8,duration:1.4},.2).from('.nm span',{y:14,opacity:0,stagger:.15,duration:.8},.9)
+  .to('#s1',{opacity:0,duration:.6},3.4)
+ // Scene 2 — server initialisation
+  .to('#s2',{opacity:1,duration:.8},3.9).from('.u',{opacity:0,x:-14,stagger:.08,duration:.4},4.1)
+  .to('#bar',{width:'100%',duration:2,ease:'power1.inOut'},4.2).to('#s2',{opacity:0,duration:.6},6.4)
+ // Scene 3 — data streams converge toward the planet
+  .add(()=>{mode='s'},6.9)
+ // Scene 4 — Earth awakening (starts under the streams, black backdrop fades away)
+  .set(cv,{opacity:1},8.0).to(earth?earth.position:{},{y:-2.5,duration:2.6,ease:'power2.out'},8.0)
+  .to('#ib',{opacity:0,duration:1.4,ease:'none'},8.2).to('#pc',{opacity:0,duration:1,ease:'none'},9.6)
+ // Scene 5 — homepage reveal; Earth sinks away
+  .add(()=>{mode='p'},10)
+  .set(home,{opacity:0},10.6).to(home,{opacity:1,duration:1,ease:'none'},10.6).to(earth?earth.position:{},{y:-6.5,duration:1.2,ease:'power2.in'},10.8)
+  .to(cv,{opacity:0,duration:.4,ease:'none'},11.8)
+  .fromTo('#home .rv',{y:24,opacity:0},{y:0,opacity:1,stagger:.12,duration:.7,clearProps:'transform,opacity'},11)
+  .to('#intro',{opacity:0,duration:.4},11.6)}
+$('#skip').onclick=skipIntro;
+$('#replay').onclick=()=>{try{localStorage.removeItem('awssbg_intro')}catch(e){}location.reload()};
 
-function generateStudyPlan(){
- const raw=$('subjects').value.split('\n').map(x=>x.trim()).filter(Boolean),hours=Math.max(1,+$('hours').value||2),days=Math.max(1,+$('days').value||7),priority=$('priority').value;
- if(!raw.length)return alert('Enter at least one subject or topic.');
- const plan=[];
- for(let d=1;d<=days;d++){
-   const sessions=[],a=raw[(d-1)%raw.length],b=raw[d%raw.length];
-   const first=Math.max(.5,hours*.55),second=Math.max(.5,hours-first);
-   let activity=priority==='practice'?'Practice questions':priority==='exam'?'Timed exam-style questions':priority==='difficult'?'Deep study + worked examples':'Learn + revise';
-   sessions.push({topic:a,duration:first.toFixed(1),activity});
-   if(b&&hours>=1.5)sessions.push({topic:b,duration:second.toFixed(1),activity:priority==='practice'?'Problem solving':'Revision + practice'});
-   plan.push({day:d,sessions});
- }
- localStorage.setItem('tbStudyPlan',JSON.stringify(plan));renderStudyPlan();
-}
-function renderStudyPlan(){
- const p=JSON.parse(localStorage.getItem('tbStudyPlan')||'null');
- $('studyPlan').innerHTML=p?p.map(d=>`<div class="plan-day"><h3>Day ${d.day}</h3>${d.sessions.map(s=>`<div class="session"><b>${escapeHTML(s.topic)}</b><br><span class="small">${s.duration} hr · ${escapeHTML(s.activity)}</span></div>`).join('')}</div>`).join(''):'<div class="card">Your generated plan will appear here 📚</div>';
-}
-function clearStudyPlan(){localStorage.removeItem('tbStudyPlan');renderStudyPlan();}
-function addPlanToTasks(){
- const p=JSON.parse(localStorage.getItem('tbStudyPlan')||'null');if(!p?.[0])return alert('Generate a study plan first.');
- p[0].sessions.forEach(s=>tasks.push({text:`Study: ${s.topic} — ${s.activity}`,done:false}));
- saveTasks();renderTasks();alert('Day 1 study sessions added to your tasks! 📚');
-}
-
-function generateNotes(){
- const topic=$('noteTopic').value.trim(),subject=$('noteSubject').value.trim()||'General',style=$('noteStyle').value;
- if(!topic)return alert('Enter a topic first.');
- let formula='Write the main formula, rule, algorithm, or method here.';
- let mistakes='Watch for sign errors, skipped steps, unit mistakes, and confusing similar concepts.';
- if(/physics/i.test(subject))formula='Formula / law: write the relevant equation, define each symbol, then note SI units.';
- if(/math/i.test(subject))formula='Method: identify the given expression, choose the correct rule, substitute carefully, and simplify.';
- if(/python|program/i.test(subject))formula='Code pattern: input → process → output. Trace variables after each important line.';
- const html=`<div class="card note"><h2>${escapeHTML(topic)}</h2><p class="small">${escapeHTML(subject)} · ${escapeHTML(style)}</p><h3>💡 Core idea</h3><p>Explain ${escapeHTML(topic)} in 2–3 simple sentences using your own words.</p><h3>🔑 Key concepts</h3><ul><li>Definition / meaning</li><li>Important parts or steps</li><li>One simple example</li></ul><h3>📌 Formula / Method</h3><p>${escapeHTML(formula)}</p><h3>⚠️ Common mistakes</h3><p>${escapeHTML(mistakes)}</p><h3>🧠 Self-test</h3><ol><li>What is ${escapeHTML(topic)}?</li><li>What are its key steps or rules?</li><li>Can you solve one example without looking?</li></ol></div>`;
- $('notesOutput').innerHTML=html;localStorage.setItem('tbLastNotes',html);
-}
-function loadNotes(){const n=localStorage.getItem('tbLastNotes');$('notesOutput').innerHTML=n||'<div class="card">Your notes will appear here 📝</div>'}
-function clearNotes(){localStorage.removeItem('tbLastNotes');loadNotes();}
-function saveEmail(){
- const e=$('email').value.trim();localStorage.setItem('tbEmail',e);$('emailSaved').textContent=e?'Saved locally: '+e:'Email cleared.';
-}
-function loadEmail(){$('email').value=localStorage.getItem('tbEmail')||''}
-
-greeting();theme();renderTasks();renderGoals();loadEmail();motivation();renderStudyPlan();loadNotes();
+/* ============ BOOT ============ */
+initGL();
+{const i=SECS.findIndex(s=>'#'+s[0]===location.hash);if(i>0)cur=i}
+let seen=false;try{seen=!!localStorage.getItem('awssbg_intro')}catch(e){}
+if(RM||seen){$('#intro').style.display='none';show(cur);busy=false;spin=true}else runIntro();
 </script>
 </body>
 </html>
